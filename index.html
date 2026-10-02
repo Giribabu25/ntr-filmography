@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX | Race Car Models & Specs</title>
+  <!-- Google Fonts & Font Awesome for clean icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0b0c0e;
+      font-family: 'Inter', sans-serif;
+      color: #eef2f5;
+      line-height: 1.5;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* main container */
+    .garage {
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff 0%, #ffd966 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header h1 i {
+      background: linear-gradient(135deg, #f5b042, #e03a3a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2.6rem;
+    }
+
+    .header p {
+      font-size: 1.15rem;
+      color: #9aa7b5;
+      max-width: 600px;
+      margin: 0 auto;
+      border-bottom: 1px solid #2a2e35;
+      padding-bottom: 1.75rem;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    /* race car grid */
+    .car-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    /* card */
+    .car-card {
+      background: #14171c;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(2px);
+    }
+
+    .car-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 45px -12px rgba(230, 80, 40, 0.25), 0 0 0 1px rgba(255, 180, 40, 0.2);
+    }
+
+    /* car visual (mock image) */
+    .car-visual {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(circle at 30% 30%, #2a2e35, #0e1013);
+      border-bottom: 1px solid #2a2e35;
+    }
+
+    .car-visual i {
+      font-size: 6rem;
+      color: rgba(255, 255, 255, 0.08);
+      transition: color 0.3s ease, transform 0.3s ease;
+      text-shadow: 0 0 20px rgba(255, 100, 0, 0.3);
+    }
+
+    .car-card:hover .car-visual i {
+      color: rgba(255, 180, 40, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* decorative stripes per car */
+    .car-visual::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #f5b042, #e03a3a, #f5b042);
+      opacity: 0.7;
+    }
+
+    /* card content */
+    .car-info {
+      padding: 1.75rem 1.6rem 1.9rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .car-name {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .car-name span {
+      background: linear-gradient(135deg, #f5b042, #e03a3a);
+      padding: 0.15rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0b0c0e;
+    }
+
+    .car-class {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f5b042;
+      margin-bottom: 1.4rem;
+      border-left: 3px solid #e03a3a;
+      padding-left: 0.75rem;
+    }
+
+    /* spec list */
+    .specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.2rem;
+      margin-top: 0.3rem;
+      margin-bottom: 1.8rem;
+      flex: 1;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #7b8794;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .spec-value {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #eef2f5;
+      line-height: 1.3;
+    }
+
+    .spec-value i {
+      font-size: 0.85rem;
+      color: #f5b042;
+      margin-right: 5px;
+      width: 16px;
+    }
+
+    /* horsepower highlight */
+    .hp-highlight {
+      background: #1e2128;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #2f353f;
+    }
+
+    .hp-highlight .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #9aa7b5;
+      font-weight: 500;
+    }
+
+    .hp-highlight .value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f5b042, #e03a3a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    /* footer / badge */
+    .car-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.4rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid #252a31;
+    }
+
+    .origin {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #9aa7b5;
+      font-weight: 400;
+    }
+
+    .origin i {
+      color: #e03a3a;
+      font-size: 1rem;
+    }
+
+    .year-badge {
+      background: #1e2128;
+      padding: 0.25rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #b0bed0;
+      border: 1px solid #2f353f;
+    }
+
+    /* responsive */
+    @media (max-width: 700px) {
+      body {
+        padding: 1.2rem 1rem 3rem;
+      }
+      .header h1 {
+        font-size: 2.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .header h1 i {
+        font-size: 2rem;
+      }
+      .header p {
+        font-size: 1rem;
+      }
+      .car-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .car-name {
+        font-size: 1.7rem;
+      }
+      .specs {
+        gap: 0.9rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .specs {
+        grid-template-columns: 1fr;
+      }
+      .car-visual {
+        height: 170px;
+      }
+      .car-visual i {
+        font-size: 5rem;
+      }
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0c0e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2f353f;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e03a3a;
+    }
+  </style>
+</head>
+<body>
+  <div class="garage">
+    <!-- header -->
+    <div class="header">
+      <h1>
+        <i class="fas fa-flag-checkered"></i> APEX PREDATORS
+      </h1>
+      <p>Track‑ready machines · pure performance data</p>
+    </div>
+
+    <!-- race car grid -->
+    <div class="car-grid">
+
+      <!-- Car 1: Ferrari 296 GT3 -->
+      <div class="car-card">
+        <div class="car-visual">
+          <i class="fas fa-car-side"></i>
+        </div>
+        <div class="car-info">
+          <div class="car-name">
+            Ferrari 296 GT3 <span>GT3</span>
+          </div>
+          <div class="car-class">Ferrari · Maranello</div>
+          <div class="specs">
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-tachometer-alt"></i> Top speed</span>
+              <span class="spec-value">296 km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-weight-hanging"></i> Weight</span>
+              <span class="spec-value">1,250 kg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-engine"></i> Engine</span>
+              <span class="spec-value">3.0L V6 TT</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-gas-pump"></i> Torque</span>
+              <span class="spec-value">710 Nm</span>
+            </div>
+          </div>
+          <div class="hp-highlight">
+            <span class="label"><i class="fas fa-bolt"></i> Power output</span>
+            <span class="value">600 hp</span>
+          </div>
+          <div class="car-footer">
+            <div class="origin"><i class="fas fa-map-pin"></i> Italy</div>
+            <div class="year-badge">2023</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 2: Porsche 911 GT3 R -->
+      <div class="car-card">
+        <div class="car-visual">
+          <i class="fas fa-car"></i>
+        </div>
+        <div class="car-info">
+          <div class="car-name">
+            Porsche 911 GT3 R <span>GT3</span>
+          </div>
+          <div class="car-class">Porsche · Weissach</div>
+          <div class="specs">
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-tachometer-alt"></i> Top speed</span>
+              <span class="spec-value">292 km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-weight-hanging"></i> Weight</span>
+              <span class="spec-value">1,250 kg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-engine"></i> Engine</span>
+              <span class="spec-value">4.2L Flat-6</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-gas-pump"></i> Torque</span>
+              <span class="spec-value">700 Nm</span>
+            </div>
+          </div>
+          <div class="hp-highlight">
+            <span class="label"><i class="fas fa-bolt"></i> Power output</span>
+            <span class="value">565 hp</span>
+          </div>
+          <div class="car-footer">
+            <div class="origin"><i class="fas fa-map-pin"></i> Germany</div>
+            <div class="year-badge">2023</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 3: McLaren 720S GT3 -->
+      <div class="car-card">
+        <div class="car-visual">
+          <i class="fas fa-car-side"></i>
+        </div>
+        <div class="car-info">
+          <div class="car-name">
+            McLaren 720S GT3 <span>GT3</span>
+          </div>
+          <div class="car-class">McLaren · Woking</div>
+          <div class="specs">
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-tachometer-alt"></i> Top speed</span>
+              <span class="spec-value">305 km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-weight-hanging"></i> Weight</span>
+              <span class="spec-value">1,245 kg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-engine"></i> Engine</span>
+              <span class="spec-value">4.0L V8 TT</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-gas-pump"></i> Torque</span>
+              <span class="spec-value">720 Nm</span>
+            </div>
+          </div>
+          <div class="hp-highlight">
+            <span class="label"><i class="fas fa-bolt"></i> Power output</span>
+            <span class="value">650 hp</span>
+          </div>
+          <div class="car-footer">
+            <div class="origin"><i class="fas fa-map-pin"></i> United Kingdom</div>
+            <div class="year-badge">2024</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 4: Lamborghini Huracán GT3 EVO2 -->
+      <div class="car-card">
+        <div class="car-visual">
+          <i class="fas fa-car"></i>
+        </div>
+        <div class="car-info">
+          <div class="car-name">
+            Lamborghini Huracán <span>GT3</span>
+          </div>
+          <div class="car-class">Lamborghini · Sant'Agata</div>
+          <div class="specs">
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-tachometer-alt"></i> Top speed</span>
+              <span class="spec-value">310 km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-weight-hanging"></i> Weight</span>
+              <span class="spec-value">1,230 kg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-engine"></i> Engine</span>
+              <span class="spec-value">5.2L V10</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-gas-pump"></i> Torque</span>
+              <span class="spec-value">730 Nm</span>
+            </div>
+          </div>
+          <div class="hp-highlight">
+            <span class="label"><i class="fas fa-bolt"></i> Power output</span>
+            <span class="value">640 hp</span>
+          </div>
+          <div class="car-footer">
+            <div class="origin"><i class="fas fa-map-pin"></i> Italy</div>
+            <div class="year-badge">2024</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 5: BMW M4 GT3 -->
+      <div class="car-card">
+        <div class="car-visual">
+          <i class="fas fa-car-side"></i>
+        </div>
+        <div class="car-info">
+          <div class="car-name">
+            BMW M4 GT3 <span>GT3</span>
+          </div>
+          <div class="car-class">BMW · Munich</div>
+          <div class="specs">
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-tachometer-alt"></i> Top speed</span>
+              <span class="spec-value">298 km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-weight-hanging"></i> Weight</span>
+              <span class="spec-value">1,300 kg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-engine"></i> Engine</span>
+              <span class="spec-value">3.0L I6 TT</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-gas-pump"></i> Torque</span>
+              <span class="spec-value">700 Nm</span>
+            </div>
+          </div>
+          <div class="hp-highlight">
+            <span class="label"><i class="fas fa-bolt"></i> Power output</span>
+            <span class="value">590 hp</span>
+          </div>
+          <div class="car-footer">
+            <div class="origin"><i class="fas fa-map-pin"></i> Germany</div>
+            <div class="year-badge">2023</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Car 6: Mercedes-AMG GT3 -->
+      <div class="car-card">
+        <div class="car-visual">
+          <i class="fas fa-car"></i>
+        </div>
+        <div class="car-info">
+          <div class="car-name">
+            Mercedes-AMG GT3 <span>GT3</span>
+          </div>
+          <div class="car-class">Mercedes-AMG · Affalterbach</div>
+          <div class="specs">
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-tachometer-alt"></i> Top speed</span>
+              <span class="spec-value">302 km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-weight-hanging"></i> Weight</span>
+              <span class="spec-value">1,285 kg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-engine"></i> Engine</span>
+              <span class="spec-value">6.2L V8</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label"><i class="fas fa-gas-pump"></i> Torque</span>
+              <span class="spec-value">750 Nm</span>
+            </div>
+          </div>
+          <div class="hp-highlight">
+            <span class="label"><i class="fas fa-bolt"></i> Power output</span>
+            <span class="value">620 hp</span>
+          </div>
+          <div class="car-footer">
+            <div class="origin"><i class="fas fa-map-pin"></i> Germany</div>
+            <div class="year-badge">2023</div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end car-grid -->
+  </div> <!-- end garage -->
+</body>
+</html>
